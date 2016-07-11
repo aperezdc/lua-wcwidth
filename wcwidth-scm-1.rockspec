@@ -13,8 +13,10 @@ dependencies = {
 }
 build = {
    type = "builtin",
-   ["wcwidth"]         = "wcwidth.lua",
-   ["wcwidth.init"]    = "wcwidth/init.lua",
-   ["wcwidth.zerotab"] = "wcwidth/zerotab.lua",
-   ["wcwidth.widetab"] = "wcwidth/widetab.lua",
+   modules = {
+      ["wcwidth"]         = "wcwidth.lua",
+      ["wcwidth.init"]    = "wcwidth/init.lua",
+      ["wcwidth.zerotab"] = "wcwidth/zerotab.lua",
+      ["wcwidth.widetab"] = "wcwidth/widetab.lua",
+   },
 }
