@@ -1,5 +1,5 @@
 package = "wcwidth"
-version = "scm-0"
+version = "scm-1"
 description = {
    summary = "Pure Lua implementation of the wcwidth() function",
    homepage = "https://github.com/aperezdc/lua-wcwidth",
