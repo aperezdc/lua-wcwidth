@@ -1,0 +1,6 @@
+-- vim:set ft=lua:
+return {
+   _all = {
+      verbose = true,
+   }
+}
