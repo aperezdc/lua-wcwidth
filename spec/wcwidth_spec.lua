@@ -6,8 +6,8 @@
 -- Distributed under terms of the MIT license.
 --
 
-require "compat53"
 local wcwidth = require "wcwidth"
+local utf8 = require "dromozoa.utf8"
 
 local function test_phrase(input, expected_lengths, expected_total_length)
    local i = 1
