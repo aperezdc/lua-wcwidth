@@ -25,7 +25,7 @@ install:
   - luarocks install busted
 
 script:
-  - busted -c
+  - timeout 120 busted -c
 
 after_success:
   - luacov-coveralls -i wcwidth/ -e spec/ -e here/
