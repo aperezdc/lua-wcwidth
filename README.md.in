@@ -55,9 +55,6 @@ end
 print(alignright("コンニチハ", 80))
 ```
 
-Documentation
--------------
-
 The `wcwidth()` function takes a Unicode code point as argument, and returns
 one of the following values:
 
@@ -67,6 +64,42 @@ one of the following values:
 * `2`: The character is East Asian wide (`W`) or East Asian full-width (`F`),
   and is displayed using two spaces.
 * `1`: All the rest of characters, which take a single space.
+
+Note that the
+[wcswidth(3)](http://man7.org/linux/man-pages/man3/wcswidth.3.html) companion
+function is *deliberately not provided by this module*: while Lua 5.3 provides
+[utf8.codes()](http://www.lua.org/manual/5.3/manual.html#pdf-utf8.codes) and
+[utf8.codepoint()](http://www.lua.org/manual/5.3/manual.html#pdf-utf8.codepoint)
+to convert UTF8 byte sequences to code points, for other Lua versions it would
+be needed to depend on a third party module, and that would be against the
+goal of `wcwidth` being standalone. If needed be, `wcswidth()` can be
+implemented as follows using the Lua 5.3 `utf8` module (or any other
+implementation which provides a compatible implementation):
+
+```lua
+-- Calculates the printable length of first "n" characters of string "s"
+-- on a terminal. Returns the number of cells or -1 if the string contains
+-- non-printable characters. Raises an error on invalid UTF8 input.
+function wcswidth(s, n)
+  local cells = 0
+  if n then
+    local count = 0
+    for _, rune in utf8.codes(s) do
+      local w = wcwidth(rune)
+      if w < 0 then return -1 end
+      count = count + 1
+      if count >= n then break end
+    end
+  else
+    for _, rune in utf8.codes(s) do
+      local w = wcwidth(rune)
+      if w < 0 then return -1 end
+      cells = cells + w
+    end
+  end
+  return cells
+end
+```
 
 
 Installation
