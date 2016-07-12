@@ -30,7 +30,6 @@ end
 -- https://github.com/jquast/wcwidth/blob/master/wcwidth/tests/test_core.py
 --
 describe("wcwidth()", function ()
-
    it("handles a mix of Japanese and ASCII", function ()
       -- Given a phrase of 5 and 3 Katakana ideographs, joined with 3 English
       -- ASCII punctuation characters, totaling 11, this phrase consumes 19
@@ -59,6 +58,9 @@ describe("wcwidth()", function ()
    it("handles combining spaces", function ()
       -- Balinese kapal (ship) is ᬓᬨᬮ᭄ of length 4.
       test_phrase(utf8.char(0x1B13, 0x1B28, 0x1B2E, 0x1B44), { 1, 1, 1, 1 }, 4)
+   end)
+   it("handles a 👍 emoji", function ()
+      test_phrase("two 👍", { 1, 1, 1, 1, 2 }, 6)
    end)
 end)
 
