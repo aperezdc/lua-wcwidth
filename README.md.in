@@ -24,12 +24,12 @@ The following snippet defines a function which can determine the display width
 for a string:
 
 ```lua
-local wcswidth, utf8 = require "wcswidth", require "utf8"
+local wcwidth, utf8 = require "wcwidth", require "utf8"
 
 local function display_width(s)
   local len = 0
   for _, rune in utf8.codes(s) do
-    local l = wcswidth(rune)
+    local l = wcwidth(rune)
     if l >= 0 then
       len = len + 1
     end
