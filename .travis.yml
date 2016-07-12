@@ -20,7 +20,7 @@ install:
   - echo 'Installing runtime dependencies...'
   - luarocks install --only-deps wcwidth-scm-*.rockspec
   - echo 'Installing additional testing dependencies...'
-  - luarocks install utf8
+  - luarocks install compat53
   - luarocks install cluacov
   - luarocks install busted
 
