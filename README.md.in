@@ -109,6 +109,12 @@ Installation
 
 [LuaRocks](https://luarocks.org) is recommended for installation.
 
+The stable version (recommended) can be installed with:
+
+```sh
+luarocks install wcwidth
+```
+
 The development version can be installed with:
 
 ```sh
