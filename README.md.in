@@ -1,6 +1,8 @@
 lua-wcwidth
 ===========
 
+[![Build Status](https://travis-ci.org/aperezdc/lua-wcwidth.svg?branch=master)](https://travis-ci.org/aperezdc/lua-wcwidth)
+
 When writing output to a fixed-width output system (such as a terminal), the
 displayed length of a string does not always match the number of characters
 (also known as [runes](https://swtch.com/plan9port/unix/man/rune3.html), or
