@@ -43,7 +43,9 @@ describe("wcwidth()", function ()
    end)
    it("reports width -1 for CSI", function ()
       assert.equal(-1, wcwidth(0x1B))
-      test_phrase("\x1B[0m", { -1, 1, 1, 1 }, -1)
+      -- XXX: Using "\x1B[0m" does *not* work in Lua 5.1 because of the \xNN
+      --      syntax, so use string.char() instead to build the input string.
+      test_phrase(string.char(0x1B) .. "[0m", { -1, 1, 1, 1 }, -1)
    end)
    it("handles combining characters", function ()
       -- Simple test combining reports total width of 4.
