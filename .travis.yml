@@ -23,6 +23,7 @@ install:
   - luarocks install dromozoa-utf8
   - luarocks install cluacov
   - luarocks install busted
+  - luarocks install luacov-coveralls
 
 script:
   - timeout 120 busted -c
