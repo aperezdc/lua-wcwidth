@@ -15,7 +15,7 @@ local halfodd = (function ()
    end)
    if ok then return f end
    -- Try using a bitwise manipulation module.
-   for _, name in ipairs { "bit32" } do -- "bit", "bit32" } do
+   for _, name in ipairs { "bit", "bit32" } do
       local ok, m = pcall(require, name)
       if ok then
          local rshift, bor = m.rshift, m.bor
