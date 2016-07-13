@@ -18,7 +18,7 @@ before_install:
 
 install:
   - echo 'Installing runtime dependencies...'
-  - luarocks install --only-deps wcwidth-scm-*.rockspec
+  - luarocks install --only-deps $(find luarocks -name '*-scm-*.rockspec' | sort -g | tail -1)
   - echo 'Installing additional testing dependencies...'
   - luarocks install dromozoa-utf8
   - luarocks install cluacov
