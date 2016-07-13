@@ -1,4 +1,3 @@
-#! /usr/bin/env lua
 --
 -- unicodetables_spec.lua
 -- Copyright (C) 2016 Adrian Perez <aperez@igalia.com>
