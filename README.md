@@ -2,7 +2,7 @@ lua-wcwidth
 ===========
 
 [![Build Status](https://travis-ci.org/aperezdc/lua-wcwidth.svg?branch=master)](https://travis-ci.org/aperezdc/lua-wcwidth)
-[![LuaRocks](https://img.shields.io/badge/luarocks-v./luarocks/wcwidth-0.1-2.rockspec-blue.png)](https://luarocks.org/modules/aperezdc/wcwidth)
+[![LuaRocks](https://img.shields.io/badge/luarocks-v0.1-blue.png)](https://luarocks.org/modules/aperezdc/wcwidth)
 
 When writing output to a fixed-width output system (such as a terminal), the
 displayed length of a string does not always match the number of characters

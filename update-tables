@@ -97,7 +97,8 @@ wide_table () {
 
 make_readme () {
 	# Pick newest LuaRocks version
-	local V=$(find "${srcdir}/luarocks" -name 'wcwidth-[0-9]*.rockspec' | sort -g | tail -1)
+	local V=$(find "${srcdir}/luarocks" -name 'wcwidth-[0-9]*.rockspec' \
+		| sed 's,^.*/wcwidth-\([0-9\.]\+\).*$,\1,' | sort -g | tail -1)
 	sed -e "s+@@WIDE_FILE@@+${WIDE_FILE##*/}+g" \
 		-e "s+@@ZERO_FILE@@+${ZERO_FILE##*/}+g" \
 		-e "s+@@WIDE_URL@@+${WIDE_URL}+g" \
