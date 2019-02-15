@@ -35,7 +35,7 @@ local function display_width(s)
   for _, rune in utf8.codes(s) do
     local l = wcwidth(rune)
     if l >= 0 then
-      len = len + 1
+      len = len + l
     end
   end
   return len
