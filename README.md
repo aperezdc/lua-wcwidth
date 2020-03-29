@@ -140,6 +140,6 @@ With them, it generates the following files:
 The most current version of `wcwidth` uses the following versions of the above
 Unicode Standard release files:
 
-* `EastAsianWidth-12.1.0.txt, Date: 2019-03-31, 22:01:58 GMT [KW, LI], © 2019 Unicode®, Inc.`
-* `DerivedGeneralCategory-12.1.0.txt, Date: 2019-03-10, 10:53:08 GMT, © 2019 Unicode®, Inc.`
+* `EastAsianWidth-13.0.0.txt, Date: 2029-01-21, 18:14:00 GMT [KW, LI], © 2020 Unicode®, Inc.`
+* `DerivedGeneralCategory-13.0.0.txt, Date: 2019-10-21, 14:30:32 GMT, © 2019 Unicode®, Inc.`
 
