@@ -3,15 +3,19 @@ dist: bionic
 language: python
 
 env:
-  - LUA="lua 5.1"
-  - LUA="lua 5.2"
-  - LUA="lua 5.3"
-  - LUA="luajit 2.0"
-  - LUA="luajit 2.1"
+  global:
+    - LUACOV=cluacov
+  jobs:
+    - LUA="lua 5.1"
+    - LUA="lua 5.2"
+    - LUA="lua 5.3"
+    - LUA="lua 5.4" LUACOV=luacov
+    - LUA="luajit 2.0"
+    - LUA="luajit 2.1"
 
 before_install:
   - pip install hererocks
-  - hererocks here -r3 --$LUA
+  - hererocks here -rlatest --$LUA
   - export PATH=$PATH:$PWD/here/bin
   - eval `luarocks path --bin`
   - lua -v
@@ -21,7 +25,7 @@ install:
   - luarocks install --only-deps $(find luarocks -name '*-scm-*.rockspec' | sort -g | tail -1)
   - echo 'Installing additional testing dependencies...'
   - luarocks install dromozoa-utf8
-  - luarocks install cluacov
+  - luarocks install $LUACOV
   - luarocks install busted
   - luarocks install luacov-coveralls
 
