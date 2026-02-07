@@ -3,10 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Updated to version 17 of the Unicode tables.
 
 ## [0.5] - 2020-03-29
 ### Changed
-- Updates to version 13 of the Unicode tables.
+- Updated to version 13 of the Unicode tables.
 
 ## [0.4] - 2020-01-14
 ### Changed
