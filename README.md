@@ -1,7 +1,7 @@
 lua-wcwidth
 ===========
 
-[![Build Status](https://travis-ci.org/aperezdc/lua-wcwidth.svg?branch=master)](https://travis-ci.org/aperezdc/lua-wcwidth)
+[![Build Status](https://github.com/aperezdc/lua-wcwidth/actions/workflows/build.yml/badge.svg)](https://github.com/aperezdc/lua-wcwidth/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/aperezdc/lua-wcwidth/badge.svg?branch=master)](https://coveralls.io/github/aperezdc/lua-wcwidth?branch=master)
 [![LuaRocks](https://img.shields.io/badge/luarocks-v0.5-blue.png)](https://luarocks.org/modules/aperezdc/wcwidth)
 
