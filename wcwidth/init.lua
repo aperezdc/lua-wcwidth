@@ -54,26 +54,25 @@ local function _lookup(rune, table)
       elseif rune > table[m + 1] then
          l = m + 2
       else
-         return 1
+         return true
       end
    end
-   return 0
+   return false
 end
 
 local _tab_zero = require "wcwidth.zerotab"
 local _tab_wide = require "wcwidth.widetab"
+local _tab_ambi = require "wcwidth.ambitab"
 
-local function wcwidth (rune)
-   if rune == 0 or
-      rune == 0x034F or
-      rune == 0x2028 or
-      rune == 0x2029 or
-      (0x200B <= rune and rune <= 0x200F) or
-      (0x202A <= rune and rune <= 0x202E) or
-      (0x2060 <= rune and rune <= 0x2063)
-   then
-      return 0
-   end
+local function wcwidth (rune, ambiguous_width)
+	-- Early return for printable ASCII characters
+	if rune >= 32 and rune < 0x7F then
+		return 1
+	end
+
+	if rune == 0 then
+		return 0
+	end
 
    -- C0/C1 control characters
    if rune < 32 or (0x07F <= rune and rune < 0x0A0) then
@@ -81,11 +80,19 @@ local function wcwidth (rune)
    end
 
    -- Combining characters with zero width
-   if _lookup(rune, _tab_zero) == 1 then
+   if _lookup(rune, _tab_zero) then
       return 0
    end
 
-   return 1 + _lookup(rune, _tab_wide)
+	if _lookup(rune, _tab_wide) then
+		return 2
+	end
+
+	if ambiguous_width == 2 and _lookup(rune, _tab_ambi) then
+		return 2
+	end
+
+	return 1
 end
 
 return wcwidth

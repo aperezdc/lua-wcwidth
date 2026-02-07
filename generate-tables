@@ -1,0 +1,114 @@
+#! /usr/bin/env lua
+-- vim:set ft=lua:sw=3:ts=3:
+
+local help_text = [[Usage: %s [-w<path>] [-z<path>] [-a<path>] [-p<path>] [--help | -h]
+
+  -w<path>    Path to wide characters table (default: widetab.lua)
+  -z<path>    Path to zero-width characters table (default: zerotab.lua)
+  -a<path>    Path to ambiguous width characters table (default: ambitab.lua)
+  -p<path>    Path prefix to prepend to all above paths (default: .)
+  -h, --help  Show this help text.
+
+]]
+
+local path_prefix = "."
+local wide_tab_path = "widetab.lua"
+local zero_tab_path = "zerotab.lua"
+local ambi_tab_path = "ambitab.lua"
+
+for _, item in ipairs(arg) do
+	if item == "-h" or item == "--help" then
+		io.stdout:write(help_text:format(arg[0]))
+		os.exit(0)
+	end
+	local prefix = item:sub(1, 2)
+	local suffix = item:sub(3)
+	if prefix == "-w" then
+		wide_tab_path = suffix
+	elseif prefix == "-z" then
+		zero_tab_path = suffix
+	elseif prefix == "-a" then
+		ambi_tab_path = suffix
+	elseif prefix == "-p" then
+		path_prefix = suffix
+	else
+		io.stderr:write(("Unrecognized command line option: %s\n\n"):format(item))
+		io.stderr:write(help_text:format(arg[0]))
+		os.exit(1)
+	end
+end
+
+local pat_range = "^(%x+)%.%.(%x+)%s*;%s*(%w+)"
+local pat_rune  = "^(%x+)%s*;%s*(%w+)"
+
+local wide_tab = {}
+local zero_tab = {}
+local ambi_tab = {}
+
+local wide_attrs = {
+	F = true,
+	W = true,
+}
+local zero_attrs = {
+	Cf = true,
+	Mc = true,
+	Me = true,
+	Mn = true,
+	Zl = true,
+	Zp = true,
+}
+local ambi_attrs = {
+	A = true,
+}
+
+for line in io.lines() do
+	local range_start, range_end, attribute, range_start_s, range_end_s
+
+	range_start_s, attribute = line:match(pat_rune)
+	if range_start_s then
+		range_start = tonumber(range_start_s, 16)
+		range_end = range_start
+	else
+		range_start_s, range_end_s, attribute = line:match(pat_range)
+		if range_start_s then
+			range_start = tonumber(range_start_s, 16)
+			range_end = tonumber(range_end_s, 16)
+		end
+	end
+
+	if range_start then
+		local tab
+		if wide_attrs[attribute] then
+			tab = wide_tab
+		elseif zero_attrs[attribute] then
+			tab = zero_tab
+		elseif ambi_attrs[attribute] then
+			tab = ambi_tab
+		end
+		if tab then
+			tab[#tab + 1] = { range_start, range_end }
+		end
+	end
+end
+
+local function tab_sort_compare(a, b)
+	return a[1] < b[1]
+end
+
+table.sort(wide_tab, tab_sort_compare)
+table.sort(zero_tab, tab_sort_compare)
+table.sort(ambi_tab, tab_sort_compare)
+
+local tab_dump_line_format = "\t0x%X, 0x%X,\n"
+local function tab_dump(tab, out)
+	out:write("-- Automatically generated, do not edit\n")
+	out:write("return {\n")
+	for _, item in ipairs(tab) do
+		out:write(tab_dump_line_format:format(item[1], item[2]))
+	end
+	out:write("}\n")
+end
+
+tab_dump(wide_tab, io.open(path_prefix .. "/" .. wide_tab_path, "w"))
+tab_dump(zero_tab, io.open(path_prefix .. "/" .. zero_tab_path, "w"))
+tab_dump(ambi_tab, io.open(path_prefix .. "/" .. ambi_tab_path, "w"))
