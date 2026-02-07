@@ -14,12 +14,11 @@ jobs:
     strategy:
       matrix:
         lua:
-          - "lua 5.1"
-          - "lua 5.2"
-          - "lua 5.3"
-          - "lua 5.4"
-          - "luajit 2.0"
-          - "luajit 2.1"
+          - "5.1"
+          - "5.2"
+          - "5.3"
+          - "5.4"
+          - "luajit-2.1"
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -30,12 +29,15 @@ jobs:
             .lua/
             .luarocks/
           key: ${{ runner.os }}-${{ matrix.lua }}-${{ hashFiles('.github/workflows/build.yml') }}
+      - name: Setup Lua
+        uses: leafo/gh-actions-lua@v12
+        if: steps.cache.outputs.cache-hit != 'true'
+        with:
+          luaVersion: ${{ matrix.lua }}
+      - name: Setup LuaRocks
+        uses: leafo/gh-actions-luarocks@v6
       - name: Dependencies
         run: |-
-          sudo apt install -y libreadline-dev
-          pip install hererocks
-          hererocks env --${{ matrix.lua }} -rlatest
-          source env/bin/activate
           luarocks install --only-deps $(find luarocks -name '*-scm-*.rockspec' | sort -g | tail -1)
           luarocks install dromozoa-utf8
           luarocks install cluacov
@@ -43,7 +45,6 @@ jobs:
           luarocks install luacov-coveralls
       - name: Test
         run: |-
-          source env/bin/activate
           timeout 120 busted -c
       - name: Coverage Report
         run: |
