@@ -136,6 +136,7 @@ With them, it generates the following files:
 
 * [wcwidth/widetab.lua](./wcwidth/widetab.lua)
 * [wcwidth/zerotab.lua](./wcwidth/zerotab.lua)
+* [wcwidth/ambitab.lua](./wcwidth/ambitab.lua)
 
 The most current version of `wcwidth` uses the following versions of the above
 Unicode Standard release files:
