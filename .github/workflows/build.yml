@@ -10,6 +10,8 @@ on:
 
 jobs:
   build:
+    name: Build
+    permissions: { }
     runs-on: ubuntu-24.04
     strategy:
       matrix:
@@ -21,21 +23,23 @@ jobs:
           - "luajit-2.1"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
       - name: Cache Dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
           path: |
             .lua/
             .luarocks/
           key: ${{ runner.os }}-${{ matrix.lua }}-${{ hashFiles('.github/workflows/build.yml') }}
       - name: Setup Lua
-        uses: leafo/gh-actions-lua@v12
+        uses: leafo/gh-actions-lua@8c9e175e7a3d77e21f809eefbee34a19b858641b
         if: steps.cache.outputs.cache-hit != 'true'
         with:
           luaVersion: ${{ matrix.lua }}
       - name: Setup LuaRocks
-        uses: leafo/gh-actions-luarocks@v6
+        uses: leafo/gh-actions-luarocks@97053c556d6ce2c8e26eb7ac93743437c7af7248
       - name: Dependencies
         run: |-
           luarocks install --only-deps $(find luarocks -name '*-scm-*.rockspec' | sort -g | tail -1)
@@ -49,16 +53,18 @@ jobs:
       - name: Coverage Report
         run: |
           luacov-coveralls --dryrun -e '.luarocks/' -e spec/ -e luarocks/ -i wcwidth/ -i wcwidth.lua -o coveralls.json -v
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2
+      - name: Report Coverage
+        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b
         with:
           parallel: true
           file: coveralls.json
   finish:
+    name: Aggregate Coverage
+    permissions: { }
     runs-on: ubuntu-24.04
     needs: [build]
     if: ${{ always() }}
     steps:
-      - uses: coverallsapp/github-action@v2
+      - uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b
         with:
           parallel-finished: true
