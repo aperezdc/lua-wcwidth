@@ -3,8 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.6] - 2026-03-29
+### Added
+- Added support for ambiguous-width characters.
+
 ### Changed
 - Updated to version 17 of the Unicode tables.
+- Updated the CI to use GitHub Actions, and to also test Lua 5.4.
 
 ## [0.5] - 2020-03-29
 ### Changed
@@ -27,7 +33,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial version.
 
-[Unreleased]: https://github.com/aperezdc/lua-wcwidth/compare/v0.5...HEAD
+[Unreleased]: https://github.com/aperezdc/lua-wcwidth/compare/v0.6...HEAD
+[0.6]: https://github.com/aperezdc/lua-wcwidth/compare/v0.5...v0.6
 [0.5]: https://github.com/aperezdc/lua-wcwidth/compare/v0.4...v0.5
 [0.4]: https://github.com/aperezdc/lua-wcwidth/compare/v0.3...v0.4
 [0.3]: https://github.com/aperezdc/lua-wcwidth/compare/v0.2...v0.3
